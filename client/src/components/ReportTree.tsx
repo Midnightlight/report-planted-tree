@@ -7,11 +7,28 @@ const Container = styled.div`
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    max-width: 100%;
+  }
 `;
 
 const Header = styled.h1`
   font-size: 24px;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
 `;
 
 const Input = styled.input`
@@ -20,6 +37,14 @@ const Input = styled.input`
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
+
+  @media (max-width: 768px) {
+    padding: 8px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px;
+  }
 `;
 
 const Select = styled.select`
@@ -28,6 +53,14 @@ const Select = styled.select`
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
+
+  @media (max-width: 768px) {
+    padding: 8px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px;
+  }
 `;
 
 const TextArea = styled.textarea`
@@ -37,6 +70,14 @@ const TextArea = styled.textarea`
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: none;
+
+  @media (max-width: 768px) {
+    padding: 8px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px;
+  }
 `;
 
 const Button = styled.button`
@@ -51,18 +92,42 @@ const Button = styled.button`
   &:hover {
     background-color: #218838;
   }
+
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
 const ErrorMessage = styled.div`
   color: red;
   font-size: 14px;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;
 
 const SuccessMessage = styled.div`
   color: green;
   font-size: 16px;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 `;
 
 const ReportTree: React.FC = () => {
@@ -82,8 +147,7 @@ const ReportTree: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
-  
-    // Check if the input is a checkbox
+
     if (type === "checkbox" && e.target instanceof HTMLInputElement) {
       setFormData({
         ...formData,
@@ -96,7 +160,6 @@ const ReportTree: React.FC = () => {
       });
     }
   };
-  
 
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
@@ -131,7 +194,7 @@ const ReportTree: React.FC = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         setSuccessMessage("Tree report submitted successfully!");
         setTimeout(() => setSuccessMessage(""), 5000);
@@ -144,7 +207,6 @@ const ReportTree: React.FC = () => {
       alert("An error occurred while submitting the report.");
     }
   };
-  
 
   return (
     <Container>
@@ -203,7 +265,7 @@ const ReportTree: React.FC = () => {
         <Button type="submit">Submit Report</Button>
       </form>
 
-      {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>} {/* Display success message */}
+      {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
     </Container>
   );
 };
