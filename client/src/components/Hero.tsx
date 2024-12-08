@@ -6,16 +6,40 @@ const HeroSection = styled.section`
   text-align: center;
   padding: 60px 0;
   background: #f0f7f0;
+
+  @media (max-width: 768px) {
+    padding: 50px 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 40px 15px;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 36px;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
 `;
 
 const Subtitle = styled.p`
   font-size: 18px;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
 `;
 
 const Button = styled.button`
@@ -26,6 +50,16 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+
+  @media (max-width: 768px) {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px 15px;
+    font-size: 12px;
+  }
 `;
 
 const Hero = () => {
