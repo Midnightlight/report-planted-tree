@@ -1,0 +1,17 @@
+@import "~leaflet/dist/leaflet.css";
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #34c759;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
