@@ -130,9 +130,15 @@ const SuccessMessage = styled.div`
   }
 `;
 
+interface FormRowData {
+  species: string;
+  height: string;
+  circumference: string;
+}
+
 const ReportMeasurement: React.FC = () => {
   const [formRows, setFormRows] = useState<FormRowData[]>([
-    { treeSpecies: '', treeHeight: '', treeCircumference: '' }
+    { species: '', height: '', circumference: '' }
   ]);
   
 
@@ -156,7 +162,7 @@ const ReportMeasurement: React.FC = () => {
   const addRow = () => {
     setFormRows([
       ...formRows,
-      { treeSpecies: '', treeHeight: '', treeCircumference: '' } // Add a new empty row
+      { species: '', height: '', circumference: '' } // Add a new empty row
     ]);
   };
 
@@ -168,7 +174,7 @@ const ReportMeasurement: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formRowData),
+        body: JSON.stringify(formRows),
       });
 
       if (response.ok) {
@@ -188,38 +194,65 @@ const ReportMeasurement: React.FC = () => {
     <Container>
       
       <Header>🌳 Report Tree Growth</Header>
-      <form onSubmit={handleSubmit}>
-      <Select name="treeSpecies" value={formRowData.treeSpecies} onChange={handleChange} required>
-          <option value="" disabled>
-            Select species
-          </option>
-          <option value="Oak">Oak</option>
-          <option value="Pine">Pine</option>
-          <option value="Maple">Maple</option>
-        </Select>
+      <form>
+      <div className="form-row" style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+        <div className="form-group" style={{ flex: 1 }}>
+          <label htmlFor="species">Species</label>
+        </div>
+        <div className="form-group" style={{ flex: 1 }}>
+          <label htmlFor="height">Height</label>
+        </div>
+        <div className="form-group" style={{ flex: 1 }}>
+          <label htmlFor="circumference">Circumference</label>
+        </div>
+      </div>
 
-        <Input
-          type="number"
-          name="treeHeight"
-          placeholder="Enter the height of the tree (cm)"
-          value={formData.treeHeight}
-          onChange={handleChange}
-          required
-        />
+      {formRows.map((row, index) => (
+        <div className="form-row" style={{ display: 'flex', gap: '10px' }} key={index}>
+          
+          <div className="form-group" style={{ flex: 1 }}>
+            <Select name="species" value={row.species} onChange={handleInputChange} required>
+            <option value="" disabled>
+              Select species
+            </option>
+            <option value="Oak">Oak</option>
+            <option value="Pine">Pine</option>
+            <option value="Maple">Maple</option>
+          </Select>
+          </div>
 
-        <Input
-          type="number"
-          name="treeCircumference"
-          placeholder="Enter the circumference of the tree (cm)"
-          value={formData.treeCircumference}
-          onChange={handleChange}
-          required
-        />
+          <div className="form-group" style={{ flex: 1 }}>
+            <input
+              type="text"
+              id={`height-${index}`}
+              name="height"
+              value={row.height}
+              onChange={(e) => handleInputChange(index, e)}
+              placeholder="Enter height (cm)"
+            />
+          </div>
 
+          <div className="form-group" style={{ flex: 1 }}>
+            <input
+              type="text"
+              id={`circumference-${index}`}
+              name="circumference"
+              value={row.circumference}
+              onChange={(e) => handleInputChange(index, e)}
+              placeholder="Enter circumference (cm)"
+            />
+          </div>
+        </div>
+      ))}
 
-
-        <Button type="submit">Submit Report</Button>
-      </form>
+      <button
+        type="button"
+        onClick={addRow}
+        style={{ marginTop: '10px', padding: '10px', backgroundColor: '#4CAF50', color: 'white' }}
+      >
+        + Add Row
+      </button>
+    </form>
 
       {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
     </Container>
