@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Map from './dashboard/Map'
 
 const Header = styled.h1`
   font-size: 32px;
@@ -17,7 +18,10 @@ const Header = styled.h1`
 
 const Dashboard: React.FC = () => {
   return (
-    <Header>Dashboard</Header>
+    <div>
+      <Header>Dashboard</Header>
+      <Map/>
+    </div>
   );
 };
 
