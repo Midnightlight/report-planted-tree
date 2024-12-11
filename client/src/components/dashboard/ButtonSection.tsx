@@ -24,8 +24,6 @@ const ButtonSection: React.FC<ButtonSectionProps> = (props) => {
         </button>
       </div>
     );
-  } else {
-    return <h2>Please choose area</h2>;
   }
 };
 

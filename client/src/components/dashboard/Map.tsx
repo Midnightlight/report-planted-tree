@@ -1,6 +1,38 @@
 import React, { useState } from "react";
+import styled from 'styled-components';
 import "./Map.css";
 import ButtonSection from './ButtonSection';
+
+const Header = styled.h1`
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
+`;
+
+// Define the props type
+interface TitleProps {
+  area: string | null;
+}
+
+const Title: React.FC<TitleProps> = (props) => {
+  if (props.area != null) {
+    return(
+      <Header>{props.area}</Header>
+    )
+  } else {
+    return(
+      <Header>Choose area</Header>
+    )
+  }
+}
 
 const Map: React.FC = () => {
   const [selectedArea, setSelectedArea] = useState<string | null>(null);
@@ -19,6 +51,7 @@ const Map: React.FC = () => {
 
   return (
     <div>
+      <Title area={selectedArea}/>
       <div className="grid-map-container">
         <div className="grid-map">
           {areas.map((area, index) => (

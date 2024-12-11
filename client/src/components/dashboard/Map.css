@@ -43,7 +43,7 @@
   
   /* Highlight selected area */
   .grid-square.highlight {
-    background-color: rgba(4, 84, 0, 0.6); /* Highlight color */
+    background-color: rgba(52, 199, 89, 0.6); /* Highlight color #34c759*/
   }
   
   /* Media query for small screens (phones) */
@@ -61,4 +61,11 @@
   .button {
     margin: 2%;
     width: 50%;
+    background-color: #34c759;
+    padding: 10px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
   }
