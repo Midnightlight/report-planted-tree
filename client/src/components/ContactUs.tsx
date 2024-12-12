@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
+// Styled components (same as before)
 const Container = styled.div`
   padding: 20px;
   max-width: 800px;
@@ -16,6 +20,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
+  color: #166534;
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
@@ -37,6 +42,7 @@ const ContactSection = styled.div`
 `;
 
 const ContactHeader = styled.h2`
+  color: #14532d;
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -51,6 +57,7 @@ const ContactHeader = styled.h2`
 `;
 
 const ContactText = styled.p`
+  color: #14532d;
   font-size: 16px;
   margin: 5px 0;
 
@@ -63,7 +70,7 @@ const ContactText = styled.p`
   }
 `;
 
-const MapContainer = styled.div`
+const MapContainerStyled = styled.div`
   width: 100%;
   height: 450px;
   margin-top: 20px;
@@ -80,6 +87,16 @@ const MapContainer = styled.div`
 `;
 
 const ContactUs: React.FC = () => {
+  // Correct Aalto University Computer Science coordinates
+  const AALTO_UNI_COORDS: [number, number] = [60.1855, 24.8275]; // Correct coordinates
+
+  const customIcon = new L.Icon({
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+  });
+
   return (
     <Container>
       <Header>Contact Us</Header>
@@ -90,17 +107,18 @@ const ContactUs: React.FC = () => {
         <ContactText>🏫 Aalto University Computer Science Building</ContactText>
         <ContactText>📍 Tietotekniikantalo, Konemiehentie 2, 02150 Espoo</ContactText>
 
-        {/* Google Map Embed */}
-        <MapContainer>
-          <iframe
-            title="Aalto University Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31738.125917585116!2d24.745837048632808!3d60.18680880000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x468df5eb42cdce71%3A0xb91d25a6b2e27680!2sAalto%20University%20Computer%20Science%20Building!5e0!3m2!1sen!2sfi!4v1733686761888!5m2!1sen!2sfi"
-            width="100%"
-            height="100%"
-            loading="lazy"
-            style={{ border: 0 }}
-          ></iframe>
-        </MapContainer>
+        {/* Leaflet Map with marker */}
+        <MapContainerStyled>
+          <MapContainer center={AALTO_UNI_COORDS} zoom={15} style={{ width: '100%', height: '100%' }}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={AALTO_UNI_COORDS} icon={customIcon}>
+              <Popup>Aalto University Computer Science Department</Popup>
+            </Marker>
+          </MapContainer>
+        </MapContainerStyled>
       </ContactSection>
     </Container>
   );

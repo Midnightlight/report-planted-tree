@@ -56,9 +56,7 @@ const Header = () => {
       </Link>
       <NavLinks>
         <Link to="/">Home</Link>
-        <Link to="/report-tree">Report a Tree</Link>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/contact-us">Contact Us</Link>
+        <Link to="/map">Map</Link>
       </NavLinks>
     </Navbar>
   );

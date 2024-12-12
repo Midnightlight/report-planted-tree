@@ -17,6 +17,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.h1`
+  color: #166534;
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
@@ -52,6 +53,7 @@ const FAQItem = styled.div`
 `;
 
 const Question = styled.div`
+  color: #14532d;
   font-size: 18px;
   font-weight: bold;
   padding: 10px;
@@ -72,6 +74,7 @@ const Question = styled.div`
 `;
 
 const Answer = styled.div<{ open: boolean }>`
+  color: #14532d;
   max-height: ${({ open }) => (open ? '100px' : '0')};
   overflow: hidden;
   transition: max-height 0.3s ease;

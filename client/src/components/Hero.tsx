@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const HeroSection = styled.section`
   text-align: center;
   padding: 60px 0;
-  background: #f0f7f0;
+  background: #dcfce7;
 
   @media (max-width: 768px) {
     padding: 50px 20px;
@@ -18,6 +18,7 @@ const HeroSection = styled.section`
 
 const Title = styled.h1`
   font-size: 36px;
+  color: #14532d;
   margin-bottom: 20px;
 
   @media (max-width: 768px) {
@@ -30,6 +31,7 @@ const Title = styled.h1`
 `;
 
 const Subtitle = styled.p`
+  color: #166534;
   font-size: 18px;
   margin-bottom: 20px;
 
@@ -43,7 +45,7 @@ const Subtitle = styled.p`
 `;
 
 const Button = styled.button`
-  background: #34c759;
+  background: #16a34a;
   color: white;
   padding: 10px 20px;
   border: none;

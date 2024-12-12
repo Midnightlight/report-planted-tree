@@ -7,7 +7,7 @@ const ChatbotContainer = styled.div<{ visible: boolean }>`
   right: 20px;
   width: ${({ visible }) => (visible ? '300px' : '60px')};
   height: ${({ visible }) => (visible ? '400px' : '60px')};
-  background-color: ${({ visible }) => (visible ? '#f0f7f0' : '#34c759')};
+  background-color: ${({ visible }) => (visible ? '#dcfce7' : '')};
   color: #000;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -18,6 +18,9 @@ const ChatbotContainer = styled.div<{ visible: boolean }>`
   align-items: ${({ visible }) => (visible ? 'stretch' : 'center')};
   cursor: ${({ visible }) => (visible ? 'default' : 'pointer')};
   transition: all 0.3s ease;
+
+  /* Add z-index only when visible */
+  z-index: ${({ visible }) => (visible ? 9999 : 'auto')}; /* Ensures it's above other elements when open */
 
   @media (max-width: 768px) {
     width: ${({ visible }) => (visible ? '250px' : '50px')};
@@ -30,8 +33,9 @@ const ChatbotContainer = styled.div<{ visible: boolean }>`
   }
 `;
 
+
 const ChatHeader = styled.div`
-  background-color: #34c759;
+  background-color: #16a34a;
   color: #fff;
   font-size: 16px;
   font-weight: bold;
@@ -103,7 +107,7 @@ const ChatBubble = styled.div`
 
   &:nth-child(odd) {
     align-self: flex-end;
-    background-color: #34c759;
+    background-color: #16a34a;
     color: #fff;
   }
 
@@ -147,7 +151,7 @@ const ExampleText = styled.div`
 const ChatInputContainer = styled.div`
   display: flex;
   padding: 10px;
-  background-color: #f0f7f0;
+  background-color: #dcfce7;
   border-top: 1px solid #ccc;
 
   @media (max-width: 768px) {
@@ -178,7 +182,7 @@ const ChatInput = styled.input`
 `;
 
 const SendButton = styled.button`
-  background-color: #34c759;
+  background-color: #16a34a;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -205,7 +209,7 @@ const SendButton = styled.button`
 const ToggleButton = styled.div`
   width: 50px;
   height: 50px;
-  background-color: #34c759;
+  background-color: #16a34a;
   border-radius: 50%;
   display: flex;
   justify-content: center;

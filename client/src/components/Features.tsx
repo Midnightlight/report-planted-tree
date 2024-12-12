@@ -19,7 +19,7 @@ const FeatureSection = styled.section`
 `;
 
 const FeatureCard = styled.div`
-  background: #f7f9f7;
+  background: white;
   padding: 20px;
   text-align: center;
   border-radius: 8px;
@@ -49,6 +49,7 @@ const Icon = styled.div`
 `;
 
 const FeatureTitle = styled.h3`
+  color: #14532d;
   font-size: 20px;
   margin-bottom: 10px;
 
@@ -62,6 +63,7 @@ const FeatureTitle = styled.h3`
 `;
 
 const FeatureDescription = styled.p`
+  color: #166534;
   font-size: 16px;
 
   @media (max-width: 768px) {
