@@ -31,13 +31,7 @@ const App: React.FC = () => {
       <Container>
         <Routes>
           <Route path="/" element={<Home />} />
-<<<<<<< HEAD
           <Route path="/info" element={<InfoPage />} />
-=======
-          <Route path="/report-tree" element={<ReportTree />} />
-          <Route path="/report-measurement" element={<ReportMeasurement />} />
-          <Route path="/contact-us" element={<ContactUs />} />
->>>>>>> cc5b33c (create measurement from)
         </Routes>
       </Container>
     </Router>

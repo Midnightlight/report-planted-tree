@@ -93,6 +93,25 @@ const Button = styled.button`
   }
 `;
 
+const ExitButton = styled.button`
+  position: relative;
+  float: right;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  padding: 5px 10px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 const SuccessMessage = styled.div`
   color: green;
   font-size: 16px;
@@ -113,7 +132,13 @@ interface FormRowData {
   circumference: string;
 }
 
-const ReportMeasurement: React.FC = () => {
+interface MeasurementReportProperties {
+  area: string | null;
+  setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowGrowthForm: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ReportMeasurement: React.FC<MeasurementReportProperties> = (props) => {
   const [formRows, setFormRows] = useState<FormRowData[]>([
     { species: '', height: '', circumference: '' }
   ]);
@@ -150,9 +175,11 @@ const ReportMeasurement: React.FC = () => {
         body: JSON.stringify(formRows),
       });
 
-      if (response.ok) {
+      if (response) {
         setSuccessMessage("Tree report submitted successfully!");
         setTimeout(() => setSuccessMessage(""), 5000);
+        props.setShowMap(true);
+        props.setShowGrowthForm(false)
       } else {
         console.error("Failed to submit the report:", response);
         alert("Failed to submit the tree report.");
@@ -163,9 +190,19 @@ const ReportMeasurement: React.FC = () => {
     }
   };
 
+  const handleExitClick = () => {
+    props.setShowMap(true);;
+    props.setShowGrowthForm(false);
+    // Implement your logic for exiting or closing the container here
+  };
+
+  // Todo: const handleExit (also do if area is null)
+
   return (
     <Container>
-      <Header>🌳 Report Tree Growth</Header>
+      <ExitButton onClick={handleExitClick}>×</ExitButton>
+      <Header>🌳 Report Tree Measurements</Header>
+      
       <form onSubmit={handleSubmit}>
         <div style={{ display: 'flex', gap: '10px' }}>
           <div style={{ flex: 1 }}>
@@ -178,6 +215,8 @@ const ReportMeasurement: React.FC = () => {
             <label htmlFor="circumference">Circumference</label>
           </div>
         </div>
+
+
 
         {formRows.map((row, index) => (
           <DataRow key={index}>
