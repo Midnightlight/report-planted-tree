@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ComponentProps, useCallback } from 'react';
 import styled from 'styled-components';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title as ChartTitle, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
@@ -32,10 +32,14 @@ const InfoText = styled.p`
   text-align: center;
 `;
 
-const Dashboard = () => {
+interface DashboardProps {
+  markersUpdated: boolean;
+}
+
+const Dashboard = ({ markersUpdated }: DashboardProps) => {
   const [chartData, setChartData] = useState<{ labels: string[], datasets: any[] }>({ labels: [], datasets: [] });
 
-  useEffect(() => {
+  const fetchChartData = useCallback(() => {
     const storedMarkers = JSON.parse(localStorage.getItem('markers') || '[]');
 
     const predefinedSpecies = ['oak', 'maple', 'pine'];
@@ -46,10 +50,10 @@ const Dashboard = () => {
       const species = marker.species.trim().toLowerCase();
 
       if (predefinedSpecies.includes(species)) {
-        const capitalizedSpecies = species.charAt(0).toUpperCase() + species.slice(1); // Capitalize the first letter
+        const capitalizedSpecies = species.charAt(0).toUpperCase() + species.slice(1);
         speciesCountMap[capitalizedSpecies] = (speciesCountMap[capitalizedSpecies] || 0) + marker.count;
       } else {
-        speciesCountMap['Other'] = (speciesCountMap['Other'] || 0) + marker.count; // Capitalize "Other"
+        speciesCountMap['Other'] = (speciesCountMap['Other'] || 0) + marker.count;
       }
     });
 
@@ -72,45 +76,48 @@ const Dashboard = () => {
     setChartData(data);
   }, []);
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      tooltip: {
-        callbacks: {
-          label: function (context: any) {
-            return `${context.dataset.label}: ${context.raw}`;
-          },
-        },
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Tree Species', // X-axis label
-        },
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          stepSize: 3,
-        },
-        title: {
-          display: true,
-          text: 'Number of Trees', // Y-axis label
-        },
-      },
-    },
-  };
+  useEffect(() => {
+    fetchChartData();
+  }, [markersUpdated, fetchChartData]);
 
   return (
     <DashboardContainer>
       <Title>Planted Tree Dashboard</Title>
       <SubTitle>Number of Trees Planted by Species</SubTitle>
-      <Line data={chartData} options={options} />
+      <Line data={chartData} options={{
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context: any) {
+                return `${context.dataset.label}: ${context.raw}`;
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Tree Species',
+            },
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 3,
+            },
+            title: {
+              display: true,
+              text: 'Number of Trees',
+            },
+          },
+        },
+      }}
+      />
       <InfoText>Click or hover over the chart points to see detailed values</InfoText>
     </DashboardContainer>
   );

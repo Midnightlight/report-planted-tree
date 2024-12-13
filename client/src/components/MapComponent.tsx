@@ -130,14 +130,13 @@ const RecenterMap = ({ center }: { center: LatLngExpression }) => {
   return null;
 };
 
-// Main Map Component
 const MapComponent: React.FC = () => {
   const [position, setPosition] = useState<LatLngExpression | null>(null);
   const [mapCenter, setMapCenter] = useState<LatLngExpression | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [leafMarkers, setLeafMarkers] = useState<{ position: LatLngExpression; species: string; count: number }[]>([]);
+  const [markersUpdated, setMarkersUpdated] = useState(false);
 
-  // Load markers from localStorage on page load
   useEffect(() => {
     const storedMarkers = localStorage.getItem('markers');
     if (storedMarkers) {
@@ -148,7 +147,7 @@ const MapComponent: React.FC = () => {
       (location) => {
         const { latitude, longitude } = location.coords;
         const userLocation: LatLngExpression = [latitude, longitude];
-        setMapCenter(userLocation); // Set map center with user location
+        setMapCenter(userLocation);
         setPosition(userLocation);
       },
       () => {
@@ -158,12 +157,12 @@ const MapComponent: React.FC = () => {
     );
   }, []);
 
-  // Add marker and save to localStorage
   const addLeafMarker = (position: LatLngExpression, species: string, count: number) => {
     const newMarker = { position, species, count };
     setLeafMarkers((prev) => {
       const updatedMarkers = [...prev, newMarker];
-      localStorage.setItem('markers', JSON.stringify(updatedMarkers)); // Persist markers
+      localStorage.setItem('markers', JSON.stringify(updatedMarkers));
+      setMarkersUpdated((prevState) => !prevState); // Toggle the state to trigger updates
       return updatedMarkers;
     });
   };
@@ -231,11 +230,6 @@ const MapComponent: React.FC = () => {
                 </Marker>
               ))}
               <FormComponent
-                setLeafPosition={(position) => {
-                  if (position) {
-                    addLeafMarker(position, '', 0); // Only call if position is not null
-                  }
-                }}
                 addMarker={addLeafMarker}
               />
             </MapContainer>
@@ -244,7 +238,7 @@ const MapComponent: React.FC = () => {
           )}
         </MapWrapper>
       </MapWrapperContainer>
-      <Dashboard />
+      <Dashboard markersUpdated={markersUpdated} />
       <ContactUs />
     </>
   );

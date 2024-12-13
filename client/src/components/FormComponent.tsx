@@ -91,10 +91,8 @@ const PopupForm = styled.div`
 `;
 
 const FormComponent = ({
-  setLeafPosition,
   addMarker,
 }: {
-  setLeafPosition: (position: LatLngExpression | null) => void;
   addMarker: (position: LatLngExpression, species: string, count: number) => void;
 }) => {
   const [showForm, setShowForm] = useState(false);
@@ -103,7 +101,6 @@ const FormComponent = ({
   const [popupPosition, setPopupPosition] = useState<LatLngExpression | null>(null); // Track click position
   const map = useMapEvents({
     click(e) {
-      setLeafPosition(e.latlng);
       setPopupPosition(e.latlng); // Set popup position to where user clicked
       setShowForm(true);
     },
@@ -132,7 +129,6 @@ const FormComponent = ({
   const handleCancel = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShowForm(false);
-    setLeafPosition(null);
     setPopupPosition(null);
   };
 
