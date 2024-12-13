@@ -69,3 +69,36 @@
     cursor: pointer;
 
   }
+
+  .dialog-button {
+    margin: 5px; /* Reduced margin to make the buttons fit next to each other */
+    width: 45%; /* Reduced width to make the buttons smaller */
+    background-color: #34c759; /* Green background color */
+    padding: 8px; /* Reduced padding to make the buttons smaller */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px; /* Adjusted font size */
+    margin-top: 20px;
+  }
+  
+  .dialog-button-close {
+    background-color: #fff; /* White background */
+    color: #333; /* Dark text color for contrast */
+    border: 1px solid #333; /* Darker border color */
+  }
+
+  .dialog-number-input {
+    width: 30%; /* Adjust the width as per your requirement */
+    padding: 1px; /* Adjust padding to make it compact */
+    font-size: 14px; /* Adjust font size */
+    margin-left: 7px
+  }
+
+  .success-message {
+    color: green; /* Green color for success */
+    font-weight: bold;
+    margin-top: 10px; /* Spacing from other elements */
+    text-align: center; /* Center the text */
+  }
