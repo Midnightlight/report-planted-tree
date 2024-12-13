@@ -1,14 +1,13 @@
-// src/components/Footer.tsx
 import React from 'react';
 import styled from 'styled-components';
 
-// Styled component for Footer
 const FooterContainer = styled.footer`
   text-align: center;
   padding: 5px;
-  background: #f0fdf4;
+  border-top: 1px solid #6bff9e;
+  background: #dcfce7;
   color: #166534;
-  margin-top: 20px;
+  margin-top: 3px;
   font-weight: bold
 `;
 

@@ -8,10 +8,19 @@ import FAQs from './components/FAQs';
 import Chatbot from './components/Chatbot';
 import 'leaflet/dist/leaflet.css';
 import MapComponent from './components/MapComponent';
-import Footer from './components/Footer'; // Import Footer
+import Footer from './components/Footer';
+import Dashboard from './components/Dashboard';
 
+const AppWrapper = styled.div`
+  background-color: #f0fdf4; /* Full screen background color */
+`;
+
+const HomeWrapper = styled.div`
+  padding-top: 20px; 
+`;
 
 const Container = styled.div`
+  padding: 80px 20px 0;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
@@ -27,16 +36,17 @@ const Container = styled.div`
 `;
 
 const Home = () => (
-  <div>
+  <HomeWrapper>
     <Hero />
     <Features />
     <FAQs />
-  </div>
-);
+  </HomeWrapper>
+  );
 
 const App: React.FC = () => {
   return (
     <Router>
+      <AppWrapper>
       <Header />
       <Container>
         <Routes>
@@ -45,6 +55,7 @@ const App: React.FC = () => {
         </Routes>
       </Container>
       <Chatbot />
+      </AppWrapper>
       <Footer /> 
     </Router>
   );

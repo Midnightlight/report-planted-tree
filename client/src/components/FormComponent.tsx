@@ -4,11 +4,10 @@ import { LatLngExpression } from 'leaflet';
 import { useMapEvents } from 'react-leaflet';
 import styled from 'styled-components';
 
-// Styled Components for Popup Content
 const StyledPopupContent = styled.div`
   font-family: 'Arial', sans-serif;
   font-size: 14px;
-  color: #333;
+  color: #14532d;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -49,7 +48,7 @@ const PopupForm = styled.div`
 
   label {
     font-size: 14px;
-    color: #333;
+    color: #14532d;
     font-weight: bold;
   }
 
@@ -112,9 +111,21 @@ const FormComponent = ({
 
   const handleSave = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (species && count) {
-      addMarker(popupPosition!, species, parseInt(count)); // Add marker at clicked position
+    if (species && count && popupPosition) {
+      const newMarker = { position: popupPosition, species, count: parseInt(count) };
+
+      addMarker(popupPosition, species, parseInt(count));
+
+      const existingMarkers = JSON.parse(localStorage.getItem('markers') || '[]');
+
+      const updatedMarkers = [...existingMarkers, newMarker];
+
+      localStorage.setItem('markers', JSON.stringify(updatedMarkers));
+
+      // Reset form and close the popup
       setShowForm(false);
+      setSpecies('');
+      setCount('');
     }
   };
 

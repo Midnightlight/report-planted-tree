@@ -3,10 +3,17 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Navbar = styled.nav`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 100px;
+  background-color: #fff;
+  z-index: 1000;
+  
   @media (max-width: 768px) {
     padding: 20px 50px;
   }
@@ -56,7 +63,7 @@ const Header = () => {
       </Link>
       <NavLinks>
         <Link to="/">Home</Link>
-        <Link to="/map">Map</Link>
+        <Link to="/map">Tree Report & Dashboard</Link>
       </NavLinks>
     </Navbar>
   );

@@ -22,7 +22,7 @@ const FeatureCard = styled.div`
   background: white;
   padding: 20px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 15px;
   flex: 1;
   min-width: 250px;
 

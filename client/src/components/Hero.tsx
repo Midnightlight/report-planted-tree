@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom';
 const HeroSection = styled.section`
   text-align: center;
   padding: 60px 0;
+  margin-top: 80px;
   background: #dcfce7;
+  border-radius: 15px;
 
   @media (max-width: 768px) {
     padding: 50px 20px;
@@ -68,13 +70,13 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate('/report-tree');
+    navigate('/map');
   };
 
   return (
     <HeroSection>
       <Title>Track and Report Your Tree-Planting Impact</Title>
-      <Subtitle>Your small actions contribute to global change. Start monitoring your planted trees today!</Subtitle>
+      <Subtitle>Every tree you plant contributes to a greener future. Start monitoring your impact today!</Subtitle>
       <Button onClick={handleGetStarted}>Get Started</Button>
     </HeroSection>
   );

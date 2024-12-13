@@ -20,7 +20,7 @@ const ChatbotContainer = styled.div<{ visible: boolean }>`
   transition: all 0.3s ease;
 
   /* Add z-index only when visible */
-  z-index: ${({ visible }) => (visible ? 9999 : 'auto')}; /* Ensures it's above other elements when open */
+  z-index: ${({ visible }) => (visible ? 9999 : 'auto')};
 
   @media (max-width: 768px) {
     width: ${({ visible }) => (visible ? '250px' : '50px')};
@@ -103,7 +103,7 @@ const ChatBubble = styled.div`
   word-wrap: break-word;
   font-size: 14px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  white-space: pre-line; /* This ensures line breaks are respected */
+  white-space: pre-line;
 
   &:nth-child(odd) {
     align-self: flex-end;
