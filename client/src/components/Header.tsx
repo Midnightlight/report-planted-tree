@@ -1,11 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Navbar = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 20px 100px;
   @media (max-width: 768px) {
     padding: 20px 50px;
@@ -17,24 +13,6 @@ const Navbar = styled.nav`
   }
 `;
 
-const NavLinks = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-
-  @media (max-width: 768px) {
-    gap: 15px;
-  }
-
-  @media (max-width: 480px) {
-    gap: 5px;
-  }
-
-  a {
-    flex-grow: 1;
-    text-align: center;
-  }
-`;
 
 const Logo = styled.div`
   font-size: 24px;
@@ -51,15 +29,9 @@ const Logo = styled.div`
 const Header = () => {
   return (
     <Navbar>
-      <Link to="/">
+      <Link to="/info">
         <Logo>🌱 TreeTrack</Logo>
       </Link>
-      <NavLinks>
-        <Link to="/">Home</Link>
-        <Link to="/report-tree">Report a Tree</Link>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/contact-us">Contact Us</Link>
-      </NavLinks>
     </Navbar>
   );
 };

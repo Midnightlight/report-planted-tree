@@ -2,13 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import FAQs from './components/FAQs';
-import ReportTree from './components/ReportTree';
-import ContactUs from './components/ContactUs';
 import Dashboard from './components/Dashboard';
-import Chatbot from './components/Chatbot';
+import InfoPage from './components/InfoPage';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -26,9 +21,7 @@ const Container = styled.div`
 
 const Home = () => (
   <div>
-    <Hero />
-    <Features />
-    <FAQs />
+    <Dashboard />
   </div>
 );
 
@@ -39,12 +32,9 @@ const App: React.FC = () => {
       <Container>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/report-tree" element={<ReportTree />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/info" element={<InfoPage />} />
         </Routes>
       </Container>
-      <Chatbot />
     </Router>
   );
 };
