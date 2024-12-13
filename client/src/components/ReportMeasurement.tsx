@@ -34,9 +34,10 @@ const Header = styled.h1`
 const Input = styled.input`
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
+  margin: 5px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;  /* Ensures padding is included in the element's width */
 
   @media (max-width: 768px) {
     padding: 8px;
@@ -45,31 +46,21 @@ const Input = styled.input`
   @media (max-width: 480px) {
     padding: 6px;
   }
+`;
+
+const DataRow = styled.div`
+  display: flex;
+  gap: 10px;
+  width: 100%;
 `;
 
 const Select = styled.select`
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
+  margin: 5px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
-
-  @media (max-width: 768px) {
-    padding: 8px;
-  }
-
-  @media (max-width: 480px) {
-    padding: 6px;
-  }
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: none;
+  box-sizing: border-box;  /* Ensures padding is included in the element's width */
 
   @media (max-width: 768px) {
     padding: 8px;
@@ -102,20 +93,6 @@ const Button = styled.button`
   }
 `;
 
-const ErrorMessage = styled.div`
-  color: red;
-  font-size: 14px;
-  margin-bottom: 10px;
-
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 10px;
-  }
-`;
-
 const SuccessMessage = styled.div`
   color: green;
   font-size: 16px;
@@ -140,21 +117,17 @@ const ReportMeasurement: React.FC = () => {
   const [formRows, setFormRows] = useState<FormRowData[]>([
     { species: '', height: '', circumference: '' }
   ]);
-  
-
-  const [locationError, setLocationError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (
     index: number,
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     const updatedRows = [...formRows];
     updatedRows[index] = {
       ...updatedRows[index],
-      [name]: value
+      [name]: value,
     };
     setFormRows(updatedRows);
   };
@@ -169,7 +142,7 @@ const ReportMeasurement: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5001/report-tree", {
+      const response = await fetch("http://localhost:5001/report-growth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -192,67 +165,67 @@ const ReportMeasurement: React.FC = () => {
 
   return (
     <Container>
-      
       <Header>🌳 Report Tree Growth</Header>
-      <form>
-      <div className="form-row" style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-        <div className="form-group" style={{ flex: 1 }}>
-          <label htmlFor="species">Species</label>
-        </div>
-        <div className="form-group" style={{ flex: 1 }}>
-          <label htmlFor="height">Height</label>
-        </div>
-        <div className="form-group" style={{ flex: 1 }}>
-          <label htmlFor="circumference">Circumference</label>
-        </div>
-      </div>
-
-      {formRows.map((row, index) => (
-        <div className="form-row" style={{ display: 'flex', gap: '10px' }} key={index}>
-          
-          <div className="form-group" style={{ flex: 1 }}>
-            <Select name="species" value={row.species} onChange={handleInputChange} required>
-            <option value="" disabled>
-              Select species
-            </option>
-            <option value="Oak">Oak</option>
-            <option value="Pine">Pine</option>
-            <option value="Maple">Maple</option>
-          </Select>
+      <form onSubmit={handleSubmit}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <div style={{ flex: 1 }}>
+            <label htmlFor="species">Species</label>
           </div>
-
-          <div className="form-group" style={{ flex: 1 }}>
-            <input
-              type="text"
-              id={`height-${index}`}
-              name="height"
-              value={row.height}
-              onChange={(e) => handleInputChange(index, e)}
-              placeholder="Enter height (cm)"
-            />
+          <div style={{ flex: 1 }}>
+            <label htmlFor="height">Height</label>
           </div>
-
-          <div className="form-group" style={{ flex: 1 }}>
-            <input
-              type="text"
-              id={`circumference-${index}`}
-              name="circumference"
-              value={row.circumference}
-              onChange={(e) => handleInputChange(index, e)}
-              placeholder="Enter circumference (cm)"
-            />
+          <div style={{ flex: 1 }}>
+            <label htmlFor="circumference">Circumference</label>
           </div>
         </div>
-      ))}
 
-      <button
-        type="button"
-        onClick={addRow}
-        style={{ marginTop: '10px', padding: '10px', backgroundColor: '#4CAF50', color: 'white' }}
-      >
-        + Add Row
-      </button>
-    </form>
+        {formRows.map((row, index) => (
+          <DataRow key={index}>
+            <div style={{ flex: 1 }}>
+              <Select
+                name="species"
+                value={row.species}
+                onChange={(e) => handleInputChange(index, e)}
+                required
+              >
+                <option value="" disabled>Select species</option>
+                <option value="Oak">Oak</option>
+                <option value="Pine">Pine</option>
+                <option value="Maple">Maple</option>
+              </Select>
+            </div>
+
+            <div style={{ flex: 1 }}>
+              <Input
+                type="text"
+                id={`height-${index}`}
+                name="height"
+                value={row.height}
+                onChange={(e) => handleInputChange(index, e)}
+                placeholder="Height (cm)"
+              />
+            </div>
+
+            <div style={{ flex: 1 }}>
+              <Input
+                type="text"
+                id={`circumference-${index}`}
+                name="circumference"
+                value={row.circumference}
+                onChange={(e) => handleInputChange(index, e)}
+                placeholder="Circumference (cm)"
+              />
+            </div>
+          </DataRow>
+        ))}
+
+        <Button type="button" onClick={addRow} style={{marginTop: '5px'}}>
+          + Add Row
+        </Button>
+
+
+        <Button type="submit" style={{ marginTop: '20px' }}>Submit Report</Button>
+      </form>
 
       {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
     </Container>
