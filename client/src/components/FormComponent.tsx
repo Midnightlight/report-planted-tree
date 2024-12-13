@@ -93,36 +93,32 @@ const PopupForm = styled.div`
 const FormComponent = ({
   addMarker,
 }: {
-  addMarker: (position: LatLngExpression, species: string, count: number) => void;
+  addMarker: (position: LatLngExpression, species: string, count: number, date: string) => void;
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [species, setSpecies] = useState('');
   const [count, setCount] = useState('');
-  const [popupPosition, setPopupPosition] = useState<LatLngExpression | null>(null); // Track click position
+  const [date, setDate] = useState('');
+  const [popupPosition, setPopupPosition] = useState<LatLngExpression | null>(null);
   const map = useMapEvents({
     click(e) {
-      setPopupPosition(e.latlng); // Set popup position to where user clicked
+      setPopupPosition(e.latlng);
       setShowForm(true);
     },
   });
 
+
   const handleSave = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (species && count && popupPosition) {
-      const newMarker = { position: popupPosition, species, count: parseInt(count) };
-
-      addMarker(popupPosition, species, parseInt(count));
-
-      const existingMarkers = JSON.parse(localStorage.getItem('markers') || '[]');
-
-      const updatedMarkers = [...existingMarkers, newMarker];
-
-      localStorage.setItem('markers', JSON.stringify(updatedMarkers));
-
-      // Reset form and close the popup
+    if (species && count && popupPosition && date) {
+      const newMarker = { position: popupPosition, species, count: parseInt(count), date };
+  
+      addMarker(popupPosition, species, parseInt(count), date);
+  
       setShowForm(false);
       setSpecies('');
       setCount('');
+      setDate('');
     }
   };
 
@@ -167,6 +163,14 @@ const FormComponent = ({
             placeholder="Enter count"
           />
         </label>
+        <label>
+          Date:
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </label>
         <div>
           <button className="save" onClick={handleSave}>
             Add
@@ -180,7 +184,7 @@ const FormComponent = ({
   ) : null;
 };
 
-export const StyledPopupContentComponent = ({ species, count }: { species: string; count: number }) => {
+export const StyledPopupContentComponent = ({ species, count, date }: { species: string; count: number; date: string }) => {
   return (
     <StyledPopupContent>
       <div>
@@ -190,6 +194,10 @@ export const StyledPopupContentComponent = ({ species, count }: { species: strin
       <div>
         <span className="label">Count:</span>
         <span className="value">{count}</span>
+      </div>
+      <div>
+        <span className="label">Date:</span>
+        <span className="value">{date}</span>
       </div>
       <div className="footer">Added via Form</div>
     </StyledPopupContent>

@@ -103,7 +103,6 @@ const MapWrapperContainer = styled.div`
   padding-top: 50px;
 `;
 
-// Leaflet Icons
 const customIcon = new L.Icon({
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
@@ -121,7 +120,6 @@ const customLeafIcon = new L.Icon({
   shadowAnchor: [4, 62],
 });
 
-// Recenter Map Component
 const RecenterMap = ({ center }: { center: LatLngExpression }) => {
   const map = useMap();
   useEffect(() => {
@@ -134,7 +132,7 @@ const MapComponent: React.FC = () => {
   const [position, setPosition] = useState<LatLngExpression | null>(null);
   const [mapCenter, setMapCenter] = useState<LatLngExpression | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [leafMarkers, setLeafMarkers] = useState<{ position: LatLngExpression; species: string; count: number }[]>([]);
+  const [leafMarkers, setLeafMarkers] = useState<{ position: LatLngExpression; species: string; count: number; date: string }[]>([]);
   const [markersUpdated, setMarkersUpdated] = useState(false);
 
   useEffect(() => {
@@ -157,12 +155,12 @@ const MapComponent: React.FC = () => {
     );
   }, []);
 
-  const addLeafMarker = (position: LatLngExpression, species: string, count: number) => {
-    const newMarker = { position, species, count };
+  const addLeafMarker = (position: LatLngExpression, species: string, count: number, date: string) => {
+    const newMarker = { position, species, count, date };
     setLeafMarkers((prev) => {
       const updatedMarkers = [...prev, newMarker];
       localStorage.setItem('markers', JSON.stringify(updatedMarkers));
-      setMarkersUpdated((prevState) => !prevState); // Toggle the state to trigger updates
+      setMarkersUpdated((prevState) => !prevState);
       return updatedMarkers;
     });
   };
@@ -171,7 +169,7 @@ const MapComponent: React.FC = () => {
     <>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <MapWrapperContainer>
-      <Title>Planted Tree Report</Title>
+        <Title>Planted Tree Report</Title>
         <InstructionsContainer>
           <InstructionHeader>How To Use TreeTrack</InstructionHeader>
           <InstructionSubHeader>Follow these simple steps to report planted trees</InstructionSubHeader>
@@ -225,13 +223,11 @@ const MapComponent: React.FC = () => {
               {leafMarkers.map((marker, index) => (
                 <Marker key={index} position={marker.position} icon={customLeafIcon}>
                   <Popup>
-                    <StyledPopupContentComponent species={marker.species} count={marker.count} />
+                    <StyledPopupContentComponent species={marker.species} count={marker.count} date={marker.date} />
                   </Popup>
                 </Marker>
               ))}
-              <FormComponent
-                addMarker={addLeafMarker}
-              />
+              <FormComponent addMarker={addLeafMarker} />
             </MapContainer>
           ) : (
             <div className="loading">Loading map...</div>
