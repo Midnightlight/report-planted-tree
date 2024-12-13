@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
@@ -66,7 +65,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate('/report-tree');
+    navigate('/');
   };
 
   return (
