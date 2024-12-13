@@ -71,13 +71,14 @@ const ButtonSection: React.FC<ButtonSectionProps> = (props) => {
       console.error("Error during fetch:", error);
       alert("An error occurred while submitting the report.");
     }
+  };
   const openMeasurementDialogue = () => {
     props.setShowMap(false);
     props.setShowGrowthForm(true)
   };
 
   if (props.area != null) {
-    return (
+    return ( 
       <div>
       <div className="button-section">
         <button

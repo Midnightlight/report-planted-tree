@@ -193,7 +193,6 @@ const ReportMeasurement: React.FC<MeasurementReportProperties> = (props) => {
   const handleExitClick = () => {
     props.setShowMap(true);;
     props.setShowGrowthForm(false);
-    // Implement your logic for exiting or closing the container here
   };
 
   // Todo: const handleExit (also do if area is null)
