@@ -44,6 +44,17 @@ app.get("/tree-reports", (req, res) => {
   res.status(200).json(treeReports);
 });
 
+app.post("/report-growth", (req, res) => {
+  const { formRowData } = req.body;
+  res.status(201).json({ message: "Tree growth report submitted successfully", report: newReport });
+  // Create a new tree report object
+  const newReport = {
+    id: treeReports.length + 1,
+    formRowData,
+    date: new Date(),
+  };
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

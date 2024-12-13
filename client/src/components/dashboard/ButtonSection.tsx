@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 // Define the props type
 interface ButtonSectionProps {
   area: string | null;
+  setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowGrowthForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
@@ -70,9 +72,13 @@ const ButtonSection: React.FC<ButtonSectionProps> = (props) => {
       alert("An error occurred while submitting the report.");
     }
   };
+  const openMeasurementDialogue = () => {
+    props.setShowMap(false);
+    props.setShowGrowthForm(true)
+  };
 
   if (props.area != null) {
-    return (
+    return ( 
       <div>
       <div className="button-section">
         <button
@@ -83,9 +89,9 @@ const ButtonSection: React.FC<ButtonSectionProps> = (props) => {
         </button>
         <button
           className="button"
-          onClick={() => console.log("Growth")}
+          onClick={openMeasurementDialogue}
         >
-          Report growth
+          Report measurements
         </button>
 
 

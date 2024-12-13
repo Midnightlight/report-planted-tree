@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import InfoPage from './components/InfoPage';
-
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
