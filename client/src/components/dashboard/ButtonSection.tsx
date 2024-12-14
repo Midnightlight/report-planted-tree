@@ -149,18 +149,16 @@ const ButtonSection: React.FC<ButtonSectionProps> = (props) => {
 
         {/* Logs */}
         <div className="report-list">
-          <h3>Previous logs:</h3>
-          {dummydata.map((report, index) => (
+          <h3>Previous logs for {props.area}:</h3>
+          {dummydata.filter((item) => item.plantingLocation === props.area).map((report, index) => (
             <div key={index} className="report-item">
-              <ul>
-                <li><strong>Report Type:</strong> {report.reportType}</li>
-                <li><strong>Tree Species:</strong> {report.treeSpecies}</li>
-                <li><strong>Planting Location:</strong> {report.plantingLocation}</li>
-                <li><strong>Number of Trees:</strong> {report.numberOfTrees}</li>
-              </ul>
+              <p className="report-list-text"><strong>{report.reportType}:</strong> {report.numberOfTrees} {report.treeSpecies}</p>
             </div>
           ))}
         </div>
+
+        {/*dummy graph for the data*/}
+        <div className="image-div"/>
       </div>
     );
   }
