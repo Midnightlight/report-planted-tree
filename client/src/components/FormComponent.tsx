@@ -3,6 +3,7 @@ import { Popup } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 import { useMapEvents } from 'react-leaflet';
 import styled from 'styled-components';
+import ReportMeasurement from './MeasurementFormComponent';
 
 const StyledPopupContent = styled.div`
   font-family: 'Arial', sans-serif;
@@ -32,6 +33,23 @@ const StyledPopupContent = styled.div`
     margin-top: 5px;
     border-top: 1px solid #ddd;
     padding-top: 5px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #45a049;
   }
 `;
 
@@ -184,7 +202,34 @@ const FormComponent = ({
   ) : null;
 };
 
-export const StyledPopupContentComponent = ({ species, count, date }: { species: string; count: number; date: string }) => {
+export const MeasurementFormComponent = ({ setShowMeasurementForm }: { setShowMeasurementForm: React.Dispatch<React.SetStateAction<boolean>> }) => {
+  const [species, setSpecies] = useState('');
+  const [count, setCount] = useState('');
+  const [date, setDate] = useState('');
+
+  return (
+      <PopupForm className="popup-form">
+        <ReportMeasurement setShowMeasurementForm={setShowMeasurementForm} />
+      </PopupForm>
+  );
+};
+
+
+export const StyledPopupContentComponent = ({
+  species, 
+  count, 
+  date, 
+  setShowMeasurementForm 
+}: { 
+  species: string; 
+  count: number; 
+  date: string; 
+  setShowMeasurementForm: React.Dispatch<React.SetStateAction<boolean>>; 
+}) => {
+  const handleOpenMeasurementForm = () => {
+    setShowMeasurementForm(true);  // Show the measurement form when the button is clicked
+  };
+
   return (
     <StyledPopupContent>
       <div>
@@ -199,6 +244,9 @@ export const StyledPopupContentComponent = ({ species, count, date }: { species:
         <span className="label">Date:</span>
         <span className="value">{date}</span>
       </div>
+      <button onClick={handleOpenMeasurementForm}>
+        Add Measurements
+      </button>
       <div className="footer">Added via Form</div>
     </StyledPopupContent>
   );

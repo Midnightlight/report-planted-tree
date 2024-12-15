@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L, { LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import FormComponent from './FormComponent';
+import { MeasurementFormComponent } from './FormComponent';
 import { StyledPopupContentComponent } from './FormComponent';
 import ContactUs from './ContactUs';
 import { Leaf, MapPin, CirclePlus } from 'lucide-react';
@@ -134,6 +135,7 @@ const MapComponent: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [leafMarkers, setLeafMarkers] = useState<{ position: LatLngExpression; species: string; count: number; date: string }[]>([]);
   const [markersUpdated, setMarkersUpdated] = useState(false);
+  const [showMeasurementForm, setShowMeasurementForm] = useState(false);
 
   useEffect(() => {
     const storedMarkers = localStorage.getItem('markers');
@@ -170,43 +172,9 @@ const MapComponent: React.FC = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <MapWrapperContainer>
         <Title>Planted Tree Report</Title>
-        <InstructionsContainer>
-          <InstructionHeader>How To Use TreeTrack</InstructionHeader>
-          <InstructionSubHeader>Follow these simple steps to report planted trees</InstructionSubHeader>
-          <StepsContainer>
-            <StepBox>
-              <StepIcon>
-                <MapPin color="#16a34a" size={40} />
-              </StepIcon>
-              <StepText>
-                <strong>1. Choose Location</strong>
-                <br />
-                Click anywhere on the map to select a planting location
-              </StepText>
-            </StepBox>
-            <StepBox>
-              <StepIcon>
-                <CirclePlus color="#16a34a" size={40} />
-              </StepIcon>
-              <StepText>
-                <strong>2. Add Details</strong>
-                <br />
-                Enter the tree species and quantity in the popup form
-              </StepText>
-            </StepBox>
-            <StepBox>
-              <StepIcon>
-                <Leaf color="#16a34a" size={40} />
-              </StepIcon>
-              <StepText>
-                <strong>3. View Reports</strong>
-                <br />
-                Click on leaf markers to view planted tree details
-              </StepText>
-            </StepBox>
-          </StepsContainer>
-        </InstructionsContainer>
-
+        {showMeasurementForm && (
+                <MeasurementFormComponent setShowMeasurementForm={setShowMeasurementForm}/>
+              )}
         <MapWrapper>
           {mapCenter ? (
             <MapContainer center={mapCenter} zoom={13} className="leaflet-container">
@@ -223,7 +191,7 @@ const MapComponent: React.FC = () => {
               {leafMarkers.map((marker, index) => (
                 <Marker key={index} position={marker.position} icon={customLeafIcon}>
                   <Popup>
-                    <StyledPopupContentComponent species={marker.species} count={marker.count} date={marker.date} />
+                    <StyledPopupContentComponent species={marker.species} count={marker.count} date={marker.date} setShowMeasurementForm={setShowMeasurementForm} />
                   </Popup>
                 </Marker>
               ))}
